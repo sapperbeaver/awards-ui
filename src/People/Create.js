@@ -84,12 +84,15 @@ const TextContainer = styled.div`
     font-size: 22px;
 `;
 const InputTitle = styled.input`
-  border: 1px solid blue;
+  width: 800px;
   height: 30px;
   font-size: 35px;
   font-weight: 700;
   padding-bottom: 10px;
   color: #676a6c;
+  :focus{
+    outline: none;
+  }
 `;
 const Input = styled.input`
 width: 450px;
@@ -102,7 +105,7 @@ width: 450px;
   }
 
 `
-const Button = styled.button``;
+
 const IconSave = styled.i`
 font-size: 24px;
 `;
@@ -289,7 +292,7 @@ export class Create extends React.Component {
     this.setState({ image });
   };
   handleClickBack = () => {
-    window.location.assign('/Filter');
+    window.location.assign('/filter');
   }
   handleClick = () => {
     this.validationError();
@@ -316,7 +319,7 @@ export class Create extends React.Component {
         .catch(function (error) {
           console.log(error);
         });
-        window.location.assign('/Filter')
+        window.location.assign('/filter')
     }
   };
   FocusClear = () => {

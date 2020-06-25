@@ -3,7 +3,7 @@ import React from "react";
 import { config } from "../config";
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components'
-import qs from 'qs'
+import { withRouter } from "react-router";
 
 const IconContainer = styled.div`
 margin-left: -5px;
@@ -109,8 +109,6 @@ font-size: 30px;
 font-weight: 900px;
 position: relative;
 `;
-const AwardIcon = styled.div`
-`;
 const TitleTextAwardConteiner = styled.div`
 display: flex;
 justify-content: space-between;
@@ -191,7 +189,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 
-export class PersonInfo extends React.Component {
+class PersonInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -204,16 +202,19 @@ export class PersonInfo extends React.Component {
     const result = window.confirm(`Вы действительно хотите удалить ${this.state.data.name}?`)
     if(result){
       Axios.delete(`${config.host}/person-info/${this.props.match.params.id}/`);
-      window.location.assign('/Table')
+      window.location.assign('/table')
     }
   }
   handleClickAward = () => {
     const path = window.location.pathname.slice(13)
     console.log(path)
-    window.location.assign('/Awards/' + path);
+    window.location.assign('/awards/' + path);
   }
   onClick(){
-    window.location.assign('/Table');
+    window.location.assign('/table');
+  }
+  handleClickEdit = () => {
+    window.location.assign(`/people/info/edit/${this.props.match.params.id}`)
   }
   async componentDidMount() {
     const response = await Axios.get(
@@ -234,7 +235,7 @@ export class PersonInfo extends React.Component {
       <GlobalStyle />
     <ButtonContainer>
     <ButtonBack onClick = {this.onClick}><IconContainerBack><i className="icon-arrow"/></IconContainerBack>Вернуться к списку</ButtonBack>
-        <ButtonEdit><IconContainer><IconEdit className="icon-edit"/></IconContainer>Редактировать</ButtonEdit>
+        <ButtonEdit onClick = {this.handleClickEdit}><IconContainer><IconEdit className="icon-edit"/></IconContainer>Редактировать</ButtonEdit>
         <ButtonDelete onClick = {this.handleClickDelete}><IconContainer><IconDelete className="icon-delete"/></IconContainer>Удалить</ButtonDelete>
     </ButtonContainer>
     <TitleTextAwardConteiner>
@@ -308,3 +309,4 @@ export class PersonInfo extends React.Component {
     );
   }
 }
+export default withRouter(PersonInfo);

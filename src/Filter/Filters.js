@@ -2,9 +2,7 @@ import React from "react";
 import { Filter } from "./Filter";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
-import { Button, Grid } from '@material-ui/core'
 import qs from 'qs'
-import assert from 'assert'
 
 const newInputs = {
     name: '',
@@ -95,7 +93,7 @@ export class Filters extends React.Component {
     console.log(this.state.filters)
     const path = qs.stringify(this.state.filters)
     console.log(path)
-    window.location.assign('/Table?' + path);
+    window.location.assign('/table?' + path);
     
   }
   handleAddClick = () => {
@@ -116,7 +114,7 @@ export class Filters extends React.Component {
   };
 
   handleClickCreate(){
-    window.location.assign('/People/Create');
+    window.location.assign('/people/create');
   }
 
   render() {

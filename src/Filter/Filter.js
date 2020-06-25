@@ -49,6 +49,10 @@ const MyTextField = styled(TextField)`
     height: 79px;
     font-size: 25px;
   }
+  .MuiInputLabel-outlined.MuiInputLabel-shrink{
+    margin-left: 0;
+    margin-top: 0;
+  }
   label.Mui-focused {
     color: white;
     font-size: 25px;

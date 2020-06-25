@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import {config} from '../config'
 
 
 const TextDiv = styled.div`
@@ -55,6 +55,7 @@ export default class ItemAdd extends React.Component {
 
     handleImageChange(e) {
         e.preventDefault();
+        this.setState({image: null})
         let reader = new FileReader();
         let file = e.target.files[0];
 
@@ -64,18 +65,28 @@ export default class ItemAdd extends React.Component {
                 imagePreviewUrl: reader.result
             });
         }
-
         reader.readAsDataURL(file)
+        
         this.props.setImage(file)
+       
     }
 
     render() {
-        let { imagePreviewUrl } = this.state;
         let $imagePreview = null;
-        if (imagePreviewUrl) {
+        let { imagePreviewUrl } = this.state;
+        console.log('image',typeof(this.props.imageUrl))
+        if (typeof(this.props.imageUrl) === 'string' ){
+         
+        
+        $imagePreview = (<Img src={config.image + this.props.imageUrl} className={'img-preview'} />);
+    
+        }
+        else {
+            if (imagePreviewUrl) {
             $imagePreview = (<Img src={imagePreviewUrl} className={'img-preview'} />);
         } else {
             $imagePreview = (<TextDiv className="previewText">Загрузите фото</TextDiv>);
+        }
         }
         return (
             <AllContainer>

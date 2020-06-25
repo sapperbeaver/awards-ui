@@ -11,7 +11,7 @@ import Axios from 'axios';
 import {Link} from 'react-router-dom'
 import { config } from "../config";
 import {createGlobalStyle} from 'styled-components'
-import qs from 'qs'
+import {withRouter} from 'react-router';
 
 const Loader = styled.div`
 width: 100%;
@@ -30,6 +30,13 @@ const ButtonAddAward = styled.div`
 
 const ButtonReport = styled.div`
 
+`;
+const ButtonDelete = styled.div`
+
+`;
+const IconDelete = styled.i`
+color: red;
+font-size: 15px;
 `;
 
 const IconReport = styled.i`
@@ -81,14 +88,15 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-export default class Awards extends React.Component{
+class Awards extends React.Component {
     constructor(props){
         super(props)
+        console.log(props);
         this.state = {
             data: null,
             loading: true
         }
-
+        
     }
     
     async getAwards(id) {
@@ -97,14 +105,19 @@ export default class Awards extends React.Component{
       return data;
     }
     async componentDidMount() {
-        const personId = window.location.pathname.slice(8)
+        const personId = this.props.match.params.id
         const data = await this.getAwards(personId);
         this.setState({ data: this.dataAwards(data), loading: false });
       }
     dataAwards(data) {
       return data.rewards.map(rew => ({...data, ...rew}));
     }
-
+    handleClickAddAwards = () => {
+      window.location.assign(`/awards/add/${this.props.match.params.id}`)    }
+    handleClickDeleteAward = (id) => {
+      console.log(this.state.data)
+      Axios.delete(`${config.host}/person-info/${this.props.match.params.id}/rewards/${id}`)
+    }
     render(){
         if (this.state.loading) return <Loader />;
         return(
@@ -112,7 +125,7 @@ export default class Awards extends React.Component{
             <ButtonContainer>
                 <ButtonBack onClick = {this.handleClickBack}><IconContainer><i className="icon-arrow"/></IconContainer>Вернуться к фильтрам</ButtonBack>
                 <ButtonReport><IconContainer><IconReport className="icon-report"/></IconContainer>Отчёт</ButtonReport>
-                <ButtonAddAward><IconContainer><IconAward className="icon-addreward"/></IconContainer>Добавить награды</ButtonAddAward>
+                <ButtonAddAward onClick = {this.handleClickAddAwards}><IconContainer><IconAward className="icon-addreward"/></IconContainer>Добавить награду</ButtonAddAward>
             </ButtonContainer>
             <GlobalStyle />
             <TableContainer component={Paper} className="table">
@@ -140,7 +153,7 @@ export default class Awards extends React.Component{
                     <TableCell className="cell" align="left">
                       Год
                     </TableCell>
-                  </TableRow>
+                    </TableRow>
                 </TableHead>
                 <TableBody className="body">
                   {this.state.data.map((row) => (
@@ -165,13 +178,20 @@ export default class Awards extends React.Component{
                       </TableCell>
                       <TableCell className="cell" align="left">
                         {row.year}
+                        
                       </TableCell>
-                    </TableRow>
+                      <TableCell>
+                        <ButtonDelete onClick = {()=>this.handleClickDeleteAward(row.id)}><IconDelete className="icon-delete"/>
+                        </ButtonDelete></TableCell>
+                      </TableRow>
+                    
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
+
           </Wrapper>
         )
     }
 }
+export default withRouter(Awards);
