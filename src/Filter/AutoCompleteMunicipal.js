@@ -10,6 +10,7 @@ import { FormControl } from '@material-ui/core';
 
 
 const MyFormControl = styled(FormControl)`
+    width: 100%;
     display: flex;
     flex: 1 1;
     .MuiSvgIcon-root{
@@ -39,6 +40,7 @@ const MyTextField = styled(TextField)`
   .MuiInputLabel-outlined.MuiInputLabel-shrink{
     margin-left: 0;
     margin-top: 0;
+    padding-top: 5px;
   }
   label.Mui-focused {
     color: white;
@@ -78,7 +80,7 @@ export default function AutoComplitMunicipal({onSelect}){
       }
   
       (async () => {
-        const response = await Axios.get(`${config.host}/autocomplit/municipal_district/`);
+        const response = await Axios.get(`${config.host}/autocomplete/municipal_district/`);
         const municipal_district = await response.data;
         if (active) {
             setOptions(municipal_district);

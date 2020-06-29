@@ -21,7 +21,7 @@ background: blue;
 const ButtonContainer = styled.div`
 display: flex;
 position: absolute;
-top: -65px;
+top: 60px;
 left: 95px;
 color: white;
 font-weight: 700;
@@ -54,7 +54,7 @@ font-size: 19px;
 margin-left: 25px;
 `;
 const ButtonDelete = styled.div`
-margin-bottom: 32px;
+margin-bottom: 30px;
 cursor: pointer;
 `;
 const IconDelete = styled.i`
@@ -77,7 +77,7 @@ const IconContainer = styled.div`
 const DeleteConteiner = styled.div`
 position: absolute;
     right: 55px;
-    top: 74px;
+    top: 235px;
 `;
 const MyTableRow = styled(TableRow)`
 cursor: pointer;
@@ -87,7 +87,7 @@ cursor: pointer;
   }
 `;
 const Wrapper = styled.div`
-
+width: 100%;
 position: relative;
   .table{
     width: auto;
@@ -122,6 +122,9 @@ position: relative;
 const GlobalStyle = createGlobalStyle`
     body{
          background: #eeeeee; 
+    }
+    #root{
+      width: 100%;
     }
 `;
 

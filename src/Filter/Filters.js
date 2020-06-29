@@ -8,11 +8,12 @@ import { Redirect } from "react-router";
 const newInputs = {
     name: undefined,
     municipal_district: undefined,
-    type_awards: [],
-    view_awards: [],
+    type: [],
+    sort: [],
     year: []
 };
 const Wrapper = styled.div`
+width: 100%;
 height: 100vh;
 position: relative;
 display: flex;
@@ -98,6 +99,9 @@ const GlobalStyle = createGlobalStyle`
     body{
          background: #3f51b5; 
     }
+    #root{
+      width: 100%;
+    }
     .MuiMenu-paper {
   top: 150px !important;
 }
@@ -127,7 +131,13 @@ export class Filters extends React.Component {
     const { filters } = this.state;
     if(field === 'year'){
       const yearArray = text.split('-')
+      if(yearArray[1] === "\u2000\u2000\u2000\u2000"){
+        
+        yearArray.pop()
+        console.log(yearArray)
+      }
       filters[index][field] = yearArray
+
       console.log(`sdsd`,yearArray)
       this.setState({filters});
     } else{

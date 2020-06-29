@@ -8,10 +8,7 @@ import { createGlobalStyle } from "styled-components";
 import {StoreContext} from '../StoreContext';
 const Wrapper = styled.div`
   background: white;
-  width: 30%;
-  height: 560px;
-  margin-left: 675px;
-  margin-top: 220px;
+  padding: 100px 40px 60px 40px;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -44,7 +41,7 @@ const MyFormControl = styled(FormControl)`
   }
 `;
 const MyTextField = styled(TextField)`
-  width: 430px;
+  width: 100%;
   label.Mui-focused {
     font-size: 25px;
     margin-left: 0 !important;
@@ -80,6 +77,8 @@ const MyTextField = styled(TextField)`
 `;
 const GlobalStyle = createGlobalStyle`
     body{
+        justify-content: center;
+        display:flex;
          background: #3f51b5; 
     }
 `;
@@ -133,7 +132,7 @@ class Login extends React.Component {
     // if (localStorage.getItem('token')) return <Redirect to ='/filter'/>
 
     return (
-        <div>
+        <>
         {this.state.isRedirect && <Redirect to="/filter" />}
         <Wrapper>
           <GlobalStyle />
@@ -163,7 +162,7 @@ class Login extends React.Component {
             <ButtonLoginText>Вход</ButtonLoginText>
           </ButtonLogin>
         </Wrapper>
-        </div>
+        </>
     );
   }
 }

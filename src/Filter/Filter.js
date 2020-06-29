@@ -26,6 +26,7 @@ const IconDelete = styled.i`
 `;
 
 const Wrapper = styled.div`
+overflow-x: hidden;
 `;
 const MyGridContainer = styled(Grid)`
 .MuiGrid-container{
@@ -34,7 +35,7 @@ const MyGridContainer = styled(Grid)`
 `;
 const MyGrid = styled(Grid)`
 .MuiGrid-grid-xs-true{
-  width: 330px;
+  width: 100%;
   display: flex;
 }
 `;
@@ -59,6 +60,7 @@ const MyTextField = styled(TextField)`
   .MuiInputLabel-outlined.MuiInputLabel-shrink{
     margin-left: 0;
     margin-top: 0;
+    padding-top: 5px;
   }
   label.Mui-focused {
     color: white;
@@ -83,11 +85,74 @@ const MyTextField = styled(TextField)`
 `;
 
 const MyFormControl = styled(FormControl)`
+  width: 100%;
   display: flex;
   flex: 1 1;
 `;
-const type_awards = ["test1", "test2", "test3", "test4", "test5", "test6", "test7"];
-const view_awards = ["test1", "test2", "test3"];
+const type_awards = [
+  "Благодарность МСХ РФ",
+  "Почётная грамота МСХ РФ", 
+  "Благодарность ФНПР", 
+  "Почётная грамота ФНПР", 
+  "Почётный диплом ФНПР", 
+  "Нагрудный знак ФНПР \"За активную работу в профсоюзах\"",
+  "Нагрудный знак ФНПР \"За заслуги перед профдвижением России\"",
+  "Нагрудный знак ФНПР \"За содружество\"",
+  "Благодарность Президиума Профсоюза",
+  "Почётная грамота ЦК Профсоюза",
+  "Почётный диплом ЦК Профсоюза",
+  "Нагрудный знак Профсоюза\"За активную работу в Профсоюзе\"",
+  "Нагрудный знак Профсоюза и Общероссийского агропромышленного объединения работодателей\"За развитие социального партнёрства\"",
+  "Нагрудный знак \"За заслуги перед Профсоюзом\"",
+  "Благодарность БОООП",
+  "Почётная грамота БОООП",
+  "Почётный диплом БОООП",
+  "Почётный профсоюзный работник БОООП - высшая наград Союза",
+  "Диплом",
+  "Книга почёта БОООП",
+  "Благодарность БОО Профсоюза",
+  "Почётная грамтоа БОО Профсоюза",
+  "Диплом БОО Профсоюза",
+  "Книга почёта БОО Профсоюза",
+  "Благодарность МС БОО Профсоюза",
+  "Диплом МС БОО Профсоюза",
+  "Благодарность ТОП Профсоюза",
+  "Почётная грамота ТОП Профсоюза",
+  "Благодарность председателя ППО",
+  "Почётная грамота председателя ППО"
+];
+const view_awards = [
+  "Благодарность МСХ РФ",
+  "Почётная грамота МСХ РФ", 
+  "Благодарность ФНПР", 
+  "Почётная грамота ФНПР", 
+  "Почётный диплом ФНПР", 
+  "Нагрудный знак ФНПР \"За активную работу в профсоюзах\"",
+  "Нагрудный знак ФНПР \"За заслуги перед профдвижением России\"",
+  "Нагрудный знак ФНПР \"За содружество\"",
+  "Благодарность Президиума Профсоюза",
+  "Почётная грамота ЦК Профсоюза",
+  "Почётный диплом ЦК Профсоюза",
+  "Нагрудный знак Профсоюза\"За активную работу в Профсоюзе\"",
+  "Нагрудный знак Профсоюза и Общероссийского агропромышленного объединения работодателей\"За развитие социального партнёрства\"",
+  "Нагрудный знак \"За заслуги перед Профсоюзом\"",
+  "Благодарность БОООП",
+  "Почётная грамота БОООП",
+  "Почётный диплом БОООП",
+  "Почётный профсоюзный работник БОООП - высшая наград Союза",
+  "Диплом",
+  "Книга почёта БОООП",
+  "Благодарность БОО Профсоюза",
+  "Почётная грамтоа БОО Профсоюза",
+  "Диплом БОО Профсоюза",
+  "Книга почёта БОО Профсоюза",
+  "Благодарность МС БОО Профсоюза",
+  "Диплом МС БОО Профсоюза",
+  "Благодарность ТОП Профсоюза",
+  "Почётная грамота ТОП Профсоюза",
+  "Благодарность председателя ППО",
+  "Почётная грамота председателя ППО"
+];
 
 function TextMaskCustom(props) {
   const { inputRef, ...other } = props;
@@ -98,7 +163,7 @@ function TextMaskCustom(props) {
       ref={(ref) => {
         inputRef(ref ? ref.inputElement : null);
       }}
-      mask={[/[1-9]/, /\d/, /\d/,/\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      mask={[/[0-9]/, /\d/, /\d/,/\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       placeholderChar={'\u2000'}
       showMask
     />
@@ -122,11 +187,11 @@ export class Filter extends React.Component {
   }
   handleChangeTA = (event) => {
     const { onChange, index} = this.props
-    onChange(index, event.target.value, 'type_awards')
+    onChange(index, event.target.value, 'type')
   };
   handleChangeVA = (event) => {
     const { onChange, index} = this.props
-    onChange(index, event.target.value, 'view_awards')
+    onChange(index, event.target.value, 'sort')
   };
   handleChangeMunicipalDistrict(value){
     const { onChange, index } = this.props
@@ -145,29 +210,29 @@ export class Filter extends React.Component {
     const { count,filter } = this.props
     const typeAwardsParams = {
       multiple: true,
-      value: filter.type_awards,
+      value: filter.type,
       onChange: this.handleChangeTA,
       renderValue: (selected) => selected.join(", ")
     }
     const viewAwardsParams = {
       multiple: true,
-      value: filter.view_awards,
+      value: filter.sort,
       onChange: this.handleChangeVA,
       renderValue: (selected) => selected.join(", ")
     }
     console.log(filter)
     return (
       <Wrapper>
-        <MyGridContainer container spacing={0} justify="center" >
-          <MyGrid item xs="false">
+        <MyGridContainer container justify="center" >
+          <MyGrid item xs="12">
             <Grid container justify="center" spacing={8}>
-              <Grid item xs>
+              <Grid item xs="2">
                 <AutoCompleteName onSelect={(v) => this.handleChangeName(v)}/>
               </Grid>
-              <Grid item xs>
+              <Grid item xs="2">
                 <AutoCompleteMunicipal onSelect={(v) => this.handleChangeMunicipalDistrict(v)}/>
               </Grid>
-              <MyGrid item xs>
+              <MyGrid item xs="2">
                 <MyFormControl variant="outlined">
                   <MyTextField
                     id="outlined-basic"
@@ -181,7 +246,7 @@ export class Filter extends React.Component {
                   {type_awards.map((award) => (
                       <MenuItem key={award} value={award}>
                         <Checkbox
-                          checked={filter.type_awards.indexOf(award) > -1}
+                          checked={filter.type.indexOf(award) > -1}
                         />
                         <ListItemText primary={award} />
                       </MenuItem>
@@ -189,7 +254,7 @@ export class Filter extends React.Component {
                     </MyTextField>
                 </MyFormControl>
               </MyGrid>
-              <MyGrid item xs>
+              <MyGrid item xs="2">
               <MyFormControl variant="outlined">
                   <MyTextField
                     id="outlined-basic"
@@ -203,7 +268,7 @@ export class Filter extends React.Component {
                     {view_awards.map((award) => (
                       <MenuItem key={award} value={award}>
                         <Checkbox
-                          checked={filter.view_awards.indexOf(award) > -1}
+                          checked={filter.sort.indexOf(award) > -1}
                         />
                         <ListItemText primary={award} />
                       </MenuItem>
@@ -211,7 +276,7 @@ export class Filter extends React.Component {
                   </MyTextField>
                 </MyFormControl>
               </MyGrid>
-              <Grid item xs>
+              <Grid item xs="2">
                 <MyFormControl>
                   <MyTextField
                     id="outlined-basic"

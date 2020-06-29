@@ -18,7 +18,7 @@ import { Redirect } from "react-router-dom";
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
-  top: -65px;
+  top: 100px;
   left: 95px;
   color: white;
   font-weight: 700;
@@ -61,6 +61,7 @@ const MyLink = styled(Link)`
 `;
 const Wrapper = styled.div`
   position: relative;
+  width: 100%;
   .table {
     width: auto;
     margin-left: 95px;
@@ -84,6 +85,7 @@ const Wrapper = styled.div`
     border-radius: 12px;
     .headRow {
       height: 80px;
+      font-size: 25px;
     }
     .cell {
       color: white;
@@ -93,7 +95,11 @@ const Wrapper = styled.div`
 `;
 const GlobalStyle = createGlobalStyle`
     body{
+
          background: #eeeeee; 
+    }
+    #root{
+      width: 100%;
     }
 `;
 // const MyTableContainer = styled(TableContainer)`

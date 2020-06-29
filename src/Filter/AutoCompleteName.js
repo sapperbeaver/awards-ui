@@ -10,6 +10,7 @@ import { FormControl } from '@material-ui/core';
 
 
 const MyFormControl = styled(FormControl)`
+    width: 100%;
     display: flex;
     flex: 1 1;
 `;
@@ -33,6 +34,7 @@ const MyTextField = styled(TextField)`
   .MuiInputLabel-outlined.MuiInputLabel-shrink{
     margin-left: 0;
     margin-top: 0;
+    padding-top: 5px;
   }
   .MuiSvgIcon-root{
       color: white;
@@ -75,7 +77,7 @@ export default function AutoComplitName({onSelect}){
       }
   
       (async () => {
-        const response = await Axios.get(`${config.host}/autocomplit/name/`);
+        const response = await Axios.get(`${config.host}/autocomplete/name/`);
         const names = await response.data;
         console.log(names)
         if (active) {

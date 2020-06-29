@@ -4,6 +4,7 @@ import { TextField, MenuItem } from "@material-ui/core";
 import Axios from "axios";
 import { config } from "../config";
 import { Redirect } from "react-router";
+import {createGlobalStyle} from "styled-components"
 
 const Label = styled.div`
   margin-top: 6px;
@@ -16,9 +17,10 @@ const Wrapper = styled.div`
   background: white;
   padding-top: 55px;
   width: 30%;
-  height: 300px;
-  margin-top: 160px;
-  margin-left: 95px;
+  padding: 25px;
+  padding-bottom: 50px;
+  margin-top: 100px;
+  margin-left: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,10 +41,11 @@ const IconContainerBack = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
-  top: -37px;
+  top: -35px;
   left: -1px;
   color: white;
   font-weight: 700;
+  min-width: 500px;
 `;
 const ButtonBack = styled.div`
     cursor: pointer;
@@ -50,7 +53,7 @@ const ButtonBack = styled.div`
     background: #3f51b5;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-    padding: 8px 54px 5px 15px;
+    padding: 8px 30px 5px 15px;
     font-size: 19px;
 `;
 const ButtonComplit = styled.div`
@@ -81,9 +84,57 @@ const MyTextField = styled(TextField)`
 const InputFile = styled.input`
 margin-top: 40px;
 `;
+const GlobalStyle = createGlobalStyle`
+    body{
+         background: #eeeeee; 
+    }
+    #root{
+      width: 100%;
+    }
+`;
 
-const type_awards = ["test1", "test2", "test3", "test4"];
-const view_awards = ["test1", "test2", "test3", "test4"];
+const type_awards = [
+  "Благодарность МСХ РФ",
+  "Почётная грамота МСХ РФ", 
+  "Благодарность ФНПР", 
+  "Почётная грамота ФНПР", 
+  "Почётный диплом ФНПР", 
+  "Нагрудный знак ФНПР \"За активную работу в профсоюзах\"",
+  "Нагрудный знак ФНПР \"За заслуги перед профдвижением России\"",
+  "Нагрудный знак ФНПР \"За содружество\"",
+  "Благодарность Президиума Профсоюза",
+  "Почётная грамота ЦК Профсоюза",
+  "Почётный диплом ЦК Профсоюза",
+  "Нагрудный знак Профсоюза\"За активную работу в Профсоюзе\"",
+  "Нагрудный знак Профсоюза и Общероссийского агропромышленного объединения работодателей\"За развитие социального партнёрства\"",
+  "Нагрудный знак \"За заслуги перед Профсоюзом\"",
+  "Благодарность БОООП",
+  "Почётная грамота БОООП",
+  "Почётный диплом БОООП",
+  "Почётный профсоюзный работник БОООП - высшая наград Союза",
+  "Диплом",
+  "Книга почёта БОООП",
+  "Благодарность БОО Профсоюза",
+  "Почётная грамтоа БОО Профсоюза",
+  "Диплом БОО Профсоюза",
+  "Книга почёта БОО Профсоюза",
+  "Благодарность МС БОО Профсоюза",
+  "Диплом МС БОО Профсоюза",
+  "Благодарность ТОП Профсоюза",
+  "Почётная грамота ТОП Профсоюза",
+  "Благодарность председателя ППО",
+  "Почётная грамота председателя ППО"
+];
+const view_awards = [
+  "Министерство сельского хозяйства(МСХ РФ)",
+  "Федерация независимых Профсоюзов(ФНПР)",
+  "Профсоюз работников АПК РФ(ЦК Профсоюза)",
+  "Союза \"Белгородское областное объединение организаций Профсоюзов(БОООП)\"",
+  "Белгородская областная организация Профсоюза работников АПК РФ(БОО Профсоюза)",
+  "Молодежный совет белгородской областной организации профсоюза работников АПК РФ(МС БОО Профсоюза)",
+  "Территориальная организация Профсоюза работников АПК РФ(ТОП Профсоюза)",
+  "Первичная Профсоюзая организация(ППО)"
+];
 export default class AddAwards extends React.Component {
   constructor(props) {
     super(props);
@@ -138,6 +189,7 @@ export default class AddAwards extends React.Component {
   render() {
     return (
       <Wrapper>
+        <GlobalStyle/>
         {this.state.redirect && <Redirect to={this.state.redirect} />}
         <ButtonContainer>
           <ButtonBack onClick={this.handleClickBack}>

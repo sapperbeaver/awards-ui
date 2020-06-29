@@ -63,12 +63,12 @@ display: flex;
 const Wrapper = styled.div`
   background: white;
   margin-left: 90px;
-  margin-top: 156px;
+  margin-top: 100px;
   position: relative;
   padding: 20px;
   padding-top: 10px;
   padding-left: 67px;
-  width: 67%;
+  width: 70%;
   display: flex;
 `;
 const Error = styled.div`
@@ -128,6 +128,9 @@ const Label = styled.div`
 const GlobalStyle = createGlobalStyle`
     body{
          background: #eeeeee; 
+    }
+    #root{
+      width: 100%;
     }
     color: #676a6c;
 `;

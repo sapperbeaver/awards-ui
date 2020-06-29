@@ -9,7 +9,7 @@ import ItemAdd from './ItemAdd'
 const ButtonContainer = styled.div`
 display: flex;
 position: absolute;
-top: -38px;
+top: -36px;
 left: 0;
 color: white;
 font-weight: 700;
@@ -61,7 +61,7 @@ display: flex;
 const Wrapper = styled.div`
   background: white;
   margin-left: 90px;
-  margin-top: 156px;
+  margin-top: 100px;
   position: relative;
   padding: 20px;
   padding-top: 10px;
@@ -133,6 +133,9 @@ const GlobalStyle = createGlobalStyle`
          background: #eeeeee; 
     }
     color: #676a6c;
+    #root{
+      width: 100%;
+    }
 `;
 class EditPeople extends React.Component{
     constructor(props){

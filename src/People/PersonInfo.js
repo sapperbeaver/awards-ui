@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components'
 import { withRouter, Redirect } from "react-router";
 
+
 const IconContainer = styled.div`
 margin-left: -5px;
 margin-right: 8px;
@@ -24,7 +25,7 @@ color: white;
 font-weight: 600; */
 display: flex;
 position: absolute;
-top: -37px;
+top: -34px;
 left: 0;
 color: white;
 font-weight: 700;
@@ -95,6 +96,7 @@ const IconAwardsContainer = styled.div`
     bottom: -9px;
 `;
 const AwardConteiner = styled.div`
+    min-width: 250px;
   cursor: pointer;
     background: #3f51b5;
     width: 15.9%;
@@ -121,9 +123,7 @@ const Photo = styled.img`
 width: 100%;
 `;
 const EmptyPhoto = styled.div`
-background: black;
-width: 250px;
-height: 300px;
+width: 100%;
 `;
 const Wrapper = styled.div`
 background: white;
@@ -134,7 +134,7 @@ width: 77%;
 display: flex;
 flex-direction: column;
 position: relative;
-margin-top: 160px;
+margin-top: 100px;
 `;
 const Span = styled.span`
 color: #676a6c;
@@ -233,7 +233,7 @@ class PersonInfo extends React.Component {
     console.log(this.state.data)
     if (this.state.loading) return <Loader />;
          const { photo } = this.state.data;
-         const image = photo ? <Photo src={config.image + photo} /> : <EmptyPhoto />;
+         const image = photo !== 'no photo' ? <Photo src={config.image + photo} /> : <EmptyPhoto/>;
     return (
         
     

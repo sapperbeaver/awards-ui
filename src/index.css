@@ -1,11 +1,23 @@
+:root{
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+}
 body {
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
   background: #eeeeee;
   margin: 0;
   font-family: myriad-arabic, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
