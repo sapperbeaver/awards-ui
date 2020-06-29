@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router'
+import { withRouter, Redirect } from 'react-router'
 import styled from 'styled-components'
 import {createGlobalStyle} from 'styled-components'
 import Axios from 'axios'
@@ -9,30 +9,37 @@ import ItemAdd from './ItemAdd'
 const ButtonContainer = styled.div`
 display: flex;
 position: absolute;
-top: -41px;
+top: -38px;
 left: 0;
 color: white;
-font-weight: 800;
+font-weight: 700;
+`;
+const IconContainerBack = styled.div`
+margin-left: -5px;
+margin-right: 8px;
 `;
 const IconContainer = styled.div`
 margin-left: -5px;
-margin-right: 5px;
+margin-right: 8px;
+margin-top: -2px;
 `;
 const ButtonBack = styled.div`
+cursor: pointer;
 display: flex;
 background: #3f51b5;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 25px 5px 15px;
+padding: 8px 54px 5px 15px;
 font-size: 19px;
 `;
 const ButtonComplit = styled.div`
+cursor: pointer;
 display: flex;
 background: #5fc77a;
 margin-left: 20px;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 25px 0 15px;
+padding: 8px 54px 1px 15px;
 font-size: 19px;
 `;
 const FullContentConteiner = styled.div`
@@ -73,7 +80,7 @@ const ImageContainer = styled.div`
   flex-grow: 0.0;
 `;
 const TextContainer = styled.div`
-    margin-left: 150px;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     flex-basis: 1px;
@@ -85,8 +92,8 @@ const TextContainer = styled.div`
 const InputTitle = styled.input`
   width: 800px;
   height: 30px;
-  font-size: 35px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 800;
   padding-bottom: 10px;
   color: #676a6c;
   :focus{
@@ -111,7 +118,7 @@ background: blue;
 `;
 
 const IconSave = styled.i`
-font-size: 24px;
+font-size: 25px;
 `;
 const InputConteiner = styled.div`
   margin-top: 15px;
@@ -144,7 +151,8 @@ class EditPeople extends React.Component{
                 email: { text: "", error: false },
                 image: undefined,
                  },
-        loading: true
+        loading: true,
+        redirect: null,
     }
 
 }
@@ -328,7 +336,8 @@ class EditPeople extends React.Component{
       this.setState({ data });
     };
     handleClickBack = () => {
-    window.location.assign(`/people/info/${this.props.match.params.id}`);
+    // window.location.assign(`/people/info/${this.props.match.params.id}`);
+    this.setState({redirect: `/people/info/${this.props.match.params.id}`});
     }
     handleClick = () => {
         const id = this.props.match.params.id
@@ -350,9 +359,9 @@ class EditPeople extends React.Component{
         data.append("image", this.state.data.image);
         console.log('params',this.params);
         Axios.put(`${config.host}/person-info/${this.props.match.params.id}/`, data)
-          .then(function (response) {
+          .then((response) => {
             console.log(response)
-            window.location.assign(`/people/info/${id}`)
+            this.setState({redirect: `/people/info/${this.props.match.params.id}`});
           })
           .catch(function (error) {
               console.log(image)
@@ -371,9 +380,10 @@ class EditPeople extends React.Component{
         if (this.state.loading) return <Loader />;
         return(
             <Wrapper>
+              {this.state.redirect && <Redirect to={this.state.redirect}/>}
         <GlobalStyle />
         <ButtonContainer>
-          <ButtonBack onClick={this.handleClickBack}><IconContainer><i className="icon-arrow"/></IconContainer>Вернуться к карточке</ButtonBack>
+          <ButtonBack onClick={this.handleClickBack}><IconContainerBack><i className="icon-arrow"/></IconContainerBack>Вернуться к карточке</ButtonBack>
           <ButtonComplit onClick={this.handleClick}><IconContainer><IconSave className="icon-save"/></IconContainer>Сохранить</ButtonComplit>
     </ButtonContainer>
         <FullContentConteiner>

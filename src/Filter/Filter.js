@@ -8,6 +8,12 @@ import {
   FormControl,
 } from "@material-ui/core";
 import styled from "styled-components";
+import Axios from "axios";
+import AutoCompleteName from "./AutoCompleteName";
+import AutoCompleteMunicipal from './AutoCompleteMunicipal'
+import { Redirect } from "react-router";
+import MaskedInput from 'react-text-mask';
+import PropTypes from 'prop-types';
 
 const IconContainer = styled.div`
     margin-top: 55px;
@@ -16,6 +22,7 @@ const IconContainer = styled.div`
 const IconDelete = styled.i`
   color: red;
   font-size: 25px;
+  cursor: pointer;
 `;
 
 const Wrapper = styled.div`
@@ -82,15 +89,36 @@ const MyFormControl = styled(FormControl)`
 const type_awards = ["test1", "test2", "test3", "test4", "test5", "test6", "test7"];
 const view_awards = ["test1", "test2", "test3"];
 
+function TextMaskCustom(props) {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={[/[1-9]/, /\d/, /\d/,/\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+      showMask
+    />
+  );
+}
+TextMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
+
+
 export class Filter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
     };
   }
-  handleChangeName = (event) =>{
+  handleChangeName(value) {
     const { onChange, index } = this.props
-    onChange(index, event.target.value, 'name')
+    onChange(index, value, 'name')
   }
   handleChangeTA = (event) => {
     const { onChange, index} = this.props
@@ -100,9 +128,9 @@ export class Filter extends React.Component {
     const { onChange, index} = this.props
     onChange(index, event.target.value, 'view_awards')
   };
-  handleChangeMunicipalDistrict = (event) =>{
+  handleChangeMunicipalDistrict(value){
     const { onChange, index } = this.props
-    onChange(index, event.target.value, 'municipal_district')
+    onChange(index, value, 'municipal_district')
   }
   handleChangeYear = (event) =>{
     const { onChange, index } = this.props
@@ -112,6 +140,7 @@ export class Filter extends React.Component {
     const { onDelete, index } = this.props;
     onDelete(index);
   };
+
   render() {
     const { count,filter } = this.props
     const typeAwardsParams = {
@@ -126,35 +155,17 @@ export class Filter extends React.Component {
       onChange: this.handleChangeVA,
       renderValue: (selected) => selected.join(", ")
     }
+    console.log(filter)
     return (
       <Wrapper>
         <MyGridContainer container spacing={0} justify="center" >
           <MyGrid item xs="false">
             <Grid container justify="center" spacing={8}>
               <Grid item xs>
-                <MyFormControl>
-                  <MyTextField
-                    id="outlined-basic"
-                    label="ФИО"
-                    value={filter.name}
-                    variant="outlined"
-                    className="MuiFormLabel-root"
-                    color="white"
-                    onChange={this.handleChangeName}
-                  />
-                </MyFormControl>
+                <AutoCompleteName onSelect={(v) => this.handleChangeName(v)}/>
               </Grid>
-
               <Grid item xs>
-                <MyFormControl>
-                  <MyTextField
-                    value={filter.municipal_district}
-                    id="outlined-basic"
-                    label="Район"
-                    variant="outlined"
-                    onChange={this.handleChangeMunicipalDistrict}
-                  />
-                </MyFormControl>
+                <AutoCompleteMunicipal onSelect={(v) => this.handleChangeMunicipalDistrict(v)}/>
               </Grid>
               <MyGrid item xs>
                 <MyFormControl variant="outlined">
@@ -206,7 +217,10 @@ export class Filter extends React.Component {
                     id="outlined-basic"
                     label="Год"
                     variant="outlined"
-                    value={filter.year}
+                    value={filter.year.join('   -   ')}
+                    InputProps={{
+                      inputComponent: TextMaskCustom
+                    }}
                     onChange={this.handleChangeYear}
                   />
                 </MyFormControl>

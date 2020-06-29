@@ -6,50 +6,59 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { config } from "../config";
 import { createGlobalStyle } from "styled-components";
 import qs from "qs";
 import { withRouter } from "react-router";
-
+import { Redirect } from "react-router-dom";
 
 const ButtonContainer = styled.div`
-display: flex;
-position: absolute;
-top: -65px;
-left: 95px;
-color: white;
-font-weight: 800;
+  display: flex;
+  position: absolute;
+  top: -65px;
+  left: 95px;
+  color: white;
+  font-weight: 700;
 `;
 const ButtonBack = styled.div`
-cursor: pointer;
-display: flex;
-background: #3f51b5;
-border-radius: 5px;
-padding: 4px 25px 5px 15px;
-font-size: 19px;
+  cursor: pointer;
+  display: flex;
+  background: #3f51b5;
+  border-radius: 5px;
+  padding: 6px 30px 5px 12px;
+  font-size: 19px;
 `;
 
 const ButtonReport = styled.div`
-display: flex;
-background: #3f51b5;
-border-radius: 5px;
-padding: 5px 25px 5px 15px;
-font-size: 19px;
-margin-left: 25px;
+  cursor: pointer;
+  display: flex;
+  background: #3f51b5;
+  border-radius: 5px;
+  padding: 6px 30px 5px 15px;
+  font-size: 19px;
+  margin-left: 25px;
 `;
 
-const IconReport = styled.i`
+const IconReport = styled.i``;
 
+const IconContainerBack = styled.div`
+  margin-left: -5px;
+  margin-right: 8px;
+  font-size: 15px;
+  margin-top: 3px;
 `;
-
 const IconContainer = styled.div`
-margin-left: -5px;
-margin-right: 5px;
+  margin-left: -5px;
+  margin-right: 8px;
+  font-size: 20px;
+  
 `;
-
+const MyLink = styled(Link)`
+  
+`;
 const Wrapper = styled.div`
   position: relative;
   .table {
@@ -118,6 +127,7 @@ class TableList extends React.Component {
     super(props);
     this.state = {
       data: [],
+      redirect: null,
     };
   }
 
@@ -148,21 +158,34 @@ class TableList extends React.Component {
   async componentDidMount() {
     const hrefData = window.location.href.split("?");
     const postData = qs.parse(hrefData[1]);
+    console.log("ese", postData);
     this.setState({ data: this.dataAwards(await this.getUsers(postData)) });
   }
   handleClickBack = () => {
-    window.location.assign("/filter");
+    this.setState({ redirect: "/filter" });
+  };
+  handleClickReport = () => {
+    const hrefData = window.location.href.split("?");
+    const postData = qs.parse(hrefData[1]);
+
+    Axios.post(`${config.host}/get/report/`, postData).then((response) => {
+      window.open(`${config.file}${response.data.nameFile}`);
+    });
   };
 
   render() {
     console.log(this.state.data);
     return (
       <Wrapper>
+        {this.state.redirect && <Redirect to={this.state.redirect} />}
         <ButtonContainer>
           <CustomLink to="/filter">
-            <IconContainer><i className="icon-arrow"/></IconContainer>Вернуться к фильтрам
+            <IconContainerBack>
+              <i className="icon-arrow" />
+            </IconContainerBack>
+            Вернуться к фильтрам
           </CustomLink>
-          <ButtonReport>
+          <ButtonReport onClick={this.handleClickReport}>
             <IconContainer>
               <IconReport className="icon-report" />
             </IconContainer>
@@ -201,7 +224,13 @@ class TableList extends React.Component {
               {this.state.data.map((row) => (
                 <TableRow key={row.unique_key} className="row">
                   <TableCell className="cell" align="left">
-                    <Link to={"/people/info/" + row.id}>{row.name}</Link>
+                    <MyLink
+                      className="classname"
+                      name={row.name}
+                      to={"/people/info/" + row.id}
+                    >
+                      {row.name}
+                    </MyLink>
                   </TableCell>
                   <TableCell className="cell" align="left">
                     {row.municipal_district}

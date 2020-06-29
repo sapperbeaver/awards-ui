@@ -3,17 +3,17 @@ import React from "react";
 import { config } from "../config";
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components'
-import { withRouter } from "react-router";
+import { withRouter, Redirect } from "react-router";
 
 const IconContainer = styled.div`
 margin-left: -5px;
-margin-right: 5px;
+margin-right: 8px;
 margin-top: -4px;
 `;
 
 const IconContainerBack = styled.div`
 margin-left: -5px;
-margin-right: 5px;
+margin-right: 8px;
 `;
 const ButtonContainer = styled.div`
 /* display: flex;     
@@ -30,29 +30,32 @@ color: white;
 font-weight: 700;
 `;
 const ButtonBack = styled.div`
+cursor: pointer;
 display: flex;
 background: #3f51b5;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 54px 5px 15px;
+padding: 8px 30px 5px 15px;
 font-size: 19px;
 `;
 const ButtonEdit = styled.div`
+cursor: pointer;
 display: flex;
 background: #3f51b5;
 margin-left: 20px;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 88px 0 15px;
+padding: 8px 30px 0 15px;
 font-size: 19px;
 `;
 const ButtonDelete = styled.div`
+cursor: pointer;
 display: flex;
 background: #b53f3f;
 margin-left: 20px;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 51px 0 15px;
+padding: 8px 30px 0 15px;
 font-size: 19px;
 `;
 const TitleConteiner = styled.div`
@@ -88,10 +91,11 @@ const IconAwards = styled.i`
 const IconAwardsContainer = styled.div`
     transform: rotate(180deg);
     position: absolute;
-    left: 136px;
-    bottom: -6px;
+    left: 155px;
+    bottom: -9px;
 `;
 const AwardConteiner = styled.div`
+  cursor: pointer;
     background: #3f51b5;
     width: 15.9%;
     margin: -20px -20px -20px 0;
@@ -106,7 +110,7 @@ margin-top: 26px;
 margin-left: 14px;
 color: #fee396;
 font-size: 30px;
-font-weight: 900px;
+font-weight: 800;
 position: relative;
 `;
 const TitleTextAwardConteiner = styled.div`
@@ -195,6 +199,7 @@ class PersonInfo extends React.Component {
     this.state = {
       data: null,
       loading: true,
+      redirect: null,
     };
   }
   handleClickDelete = () =>{
@@ -202,23 +207,24 @@ class PersonInfo extends React.Component {
     const result = window.confirm(`Вы действительно хотите удалить ${this.state.data.name}?`)
     if(result){
       Axios.delete(`${config.host}/person-info/${this.props.match.params.id}/`);
-      window.location.assign('/table')
+      this.setState({redirect: '/table'});
     }
   }
   handleClickAward = () => {
     const path = window.location.pathname.slice(13)
     console.log(path)
-    window.location.assign('/awards/' + path);
+    this.setState({redirect: '/awards/' + path});
+
   }
-  onClick(){
-    window.location.assign('/table');
+  onClick = () => {
+    this.setState({redirect: '/table'});
   }
   handleClickEdit = () => {
-    window.location.assign(`/people/info/edit/${this.props.match.params.id}`)
+    this.setState({redirect: `/people/info/edit/${this.props.match.params.id}`});
   }
   async componentDidMount() {
     const response = await Axios.get(
-      `${config.host}/person-info/${this.props.match.params.id}/`
+`${config.host}/person-info/${this.props.match.params.id}/`
     );
 
     this.setState({ data: response.data, loading: false });
@@ -232,11 +238,12 @@ class PersonInfo extends React.Component {
         
     
     <Wrapper>
+      {this.state.redirect && <Redirect to={this.state.redirect}/>}
       <GlobalStyle />
     <ButtonContainer>
     <ButtonBack onClick = {this.onClick}><IconContainerBack><i className="icon-arrow"/></IconContainerBack>Вернуться к списку</ButtonBack>
-        <ButtonEdit onClick = {this.handleClickEdit}><IconContainer><IconEdit className="icon-edit"/></IconContainer>Редактировать</ButtonEdit>
-        <ButtonDelete onClick = {this.handleClickDelete}><IconContainer><IconDelete className="icon-delete"/></IconContainer>Удалить</ButtonDelete>
+      {localStorage.getItem('permission') === 'true' && <ButtonEdit onClick = {this.handleClickEdit}><IconContainer><IconEdit className="icon-edit"/></IconContainer>Редактировать</ButtonEdit>}
+        {localStorage.getItem('permission') === 'true' && <ButtonDelete onClick = {this.handleClickDelete}><IconContainer><IconDelete className="icon-delete"/></IconContainer>Удалить</ButtonDelete>}
     </ButtonContainer>
     <TitleTextAwardConteiner>
           <TitleTextConteiner>

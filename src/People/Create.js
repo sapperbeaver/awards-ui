@@ -4,34 +4,42 @@ import Axios from "axios";
 import { config } from "../config";
 import ItemAdd from "./ItemAdd";
 import {createGlobalStyle} from "styled-components";
+import { Redirect } from "react-router";
 
 const ButtonContainer = styled.div`
 display: flex;
 position: absolute;
-top: -41px;
+top: -38px;
 left: 0;
 color: white;
-font-weight: 800;
+font-weight: 700;
+`;
+const IconContainerBack = styled.div`
+margin-left: -5px;
+margin-right: 8px;
 `;
 const IconContainer = styled.div`
 margin-left: -5px;
-margin-right: 5px;
+margin-right: 8px;
+margin-top: -2px;
 `;
 const ButtonBack = styled.div`
+cursor: pointer;
 display: flex;
 background: #3f51b5;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 25px 5px 15px;
+padding: 8px 54px 5px 15px;
 font-size: 19px;
 `;
 const ButtonComplit = styled.div`
+cursor: pointer;
 display: flex;
 background: #5fc77a;
 margin-left: 20px;
 border-top-right-radius: 5px;
 border-top-left-radius: 5px;
-padding: 8px 25px 0 15px;
+padding: 8px 54px 1px 15px;
 font-size: 19px;
 `;
 const FullContentConteiner = styled.div`
@@ -40,7 +48,7 @@ flex-direction: column;
 width: 100%;
 `;
 const TitleConteiner = styled.div`
-  font-size: 23px;
+  font-size: 30px;
   margin-bottom: 15px;
   display: flex;
   justify-content: flex-start;
@@ -74,7 +82,7 @@ const ImageContainer = styled.div`
   flex-grow: 0.0;
 `;
 const TextContainer = styled.div`
-    margin-left: 150px;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     flex-basis: 1px;
@@ -86,8 +94,8 @@ const TextContainer = styled.div`
 const InputTitle = styled.input`
   width: 800px;
   height: 30px;
-  font-size: 35px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 800;
   padding-bottom: 10px;
   color: #676a6c;
   :focus{
@@ -139,7 +147,9 @@ export class Create extends React.Component {
       telephone: { text: "", error: false },
       email: { text: "", error: false },
       image: undefined,
+      redirect: null,
     };
+    
   }
 
   handleChangeDA = (event) => {
@@ -292,7 +302,8 @@ export class Create extends React.Component {
     this.setState({ image });
   };
   handleClickBack = () => {
-    window.location.assign('/filter');
+    this.setState({redirect: `/filter`});
+
   }
   handleClick = () => {
     this.validationError();
@@ -319,7 +330,7 @@ export class Create extends React.Component {
         .catch(function (error) {
           console.log(error);
         });
-        window.location.assign('/filter')
+        this.setState({redirect: `/filter`});
     }
   };
   FocusClear = () => {
@@ -330,9 +341,10 @@ export class Create extends React.Component {
   render() {
     return (
       <Wrapper>
+        {this.state.redirect && <Redirect to={this.state.redirect}/>}
         <GlobalStyle />
         <ButtonContainer>
-          <ButtonBack onClick={this.handleClickBack}><IconContainer><i className="icon-arrow"/></IconContainer>Вернуться к списку</ButtonBack>
+          <ButtonBack onClick={this.handleClickBack}><IconContainerBack><i className="icon-arrow"/></IconContainerBack>Вернуться к списку</ButtonBack>
           <ButtonComplit onClick={this.handleClick}><IconContainer><IconSave className="icon-save"/></IconContainer>Сохранить</ButtonComplit>
     </ButtonContainer>
         <FullContentConteiner>
