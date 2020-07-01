@@ -66,7 +66,7 @@ const Wrapper = styled.div`
     width: auto;
     margin-left: 95px;
     margin-right: 81px;
-    margin-top: 160px;
+    margin-top: 175px;
     border-radius: 7px;
   }
   .cell {
@@ -100,6 +100,7 @@ const GlobalStyle = createGlobalStyle`
     }
     #root{
       width: 100%;
+      align-items: flex-start;
     }
 `;
 // const MyTableContainer = styled(TableContainer)`

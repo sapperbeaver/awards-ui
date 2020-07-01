@@ -205,7 +205,7 @@ export default class AddAwards extends React.Component {
         </ButtonContainer>
         <ContentContainer>
           <SelectConteiner>
-            <Label>Тип награды:</Label>
+            <Label>Вид награды:</Label>
             <MyTextField
               variant="outlined"
               id="standard-select-currency"
@@ -222,7 +222,7 @@ export default class AddAwards extends React.Component {
             </MyTextField>
           </SelectConteiner>
           <SelectConteiner>
-            <Label>Вид награды:</Label>
+            <Label>Тип награды:</Label>
             <MyTextField
               variant="outlined"
               id="standard-select-currency"

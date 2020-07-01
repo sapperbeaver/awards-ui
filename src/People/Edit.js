@@ -60,7 +60,7 @@ display: flex;
 `;
 const Wrapper = styled.div`
   background: white;
-  margin-left: 90px;
+  margin-left: -200px;
   margin-top: 100px;
   position: relative;
   padding: 20px;

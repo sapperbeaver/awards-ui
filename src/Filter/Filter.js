@@ -122,36 +122,14 @@ const type_awards = [
   "Почётная грамота председателя ППО"
 ];
 const view_awards = [
-  "Благодарность МСХ РФ",
-  "Почётная грамота МСХ РФ", 
-  "Благодарность ФНПР", 
-  "Почётная грамота ФНПР", 
-  "Почётный диплом ФНПР", 
-  "Нагрудный знак ФНПР \"За активную работу в профсоюзах\"",
-  "Нагрудный знак ФНПР \"За заслуги перед профдвижением России\"",
-  "Нагрудный знак ФНПР \"За содружество\"",
-  "Благодарность Президиума Профсоюза",
-  "Почётная грамота ЦК Профсоюза",
-  "Почётный диплом ЦК Профсоюза",
-  "Нагрудный знак Профсоюза\"За активную работу в Профсоюзе\"",
-  "Нагрудный знак Профсоюза и Общероссийского агропромышленного объединения работодателей\"За развитие социального партнёрства\"",
-  "Нагрудный знак \"За заслуги перед Профсоюзом\"",
-  "Благодарность БОООП",
-  "Почётная грамота БОООП",
-  "Почётный диплом БОООП",
-  "Почётный профсоюзный работник БОООП - высшая наград Союза",
-  "Диплом",
-  "Книга почёта БОООП",
-  "Благодарность БОО Профсоюза",
-  "Почётная грамтоа БОО Профсоюза",
-  "Диплом БОО Профсоюза",
-  "Книга почёта БОО Профсоюза",
-  "Благодарность МС БОО Профсоюза",
-  "Диплом МС БОО Профсоюза",
-  "Благодарность ТОП Профсоюза",
-  "Почётная грамота ТОП Профсоюза",
-  "Благодарность председателя ППО",
-  "Почётная грамота председателя ППО"
+  "Министерство сельского хозяйства(МСХ РФ)",
+  "Федерация независимых Профсоюзов(ФНПР)",
+  "Профсоюз работников АПК РФ(ЦК Профсоюза)",
+  "Союза \"Белгородское областное объединение организаций Профсоюзов(БОООП)\"",
+  "Белгородская областная организация Профсоюза работников АПК РФ(БОО Профсоюза)",
+  "Молодежный совет белгородской областной организации профсоюза работников АПК РФ(МС БОО Профсоюза)",
+  "Территориальная организация Профсоюза работников АПК РФ(ТОП Профсоюза)",
+  "Первичная Профсоюзая организация(ППО)"
 ];
 
 function TextMaskCustom(props) {
@@ -233,12 +211,34 @@ export class Filter extends React.Component {
                 <AutoCompleteMunicipal onSelect={(v) => this.handleChangeMunicipalDistrict(v)}/>
               </Grid>
               <MyGrid item xs="2">
-                <MyFormControl variant="outlined">
+              <MyFormControl variant="outlined">
+                <MyTextField
+                  id="outlined-basic"
+                  label="Вид наград"
+                  variant="outlined"
+                  value={filter.sort}
+                  select="true"
+                  SelectProps = {viewAwardsParams}
+                  onChange={this.handleChangeVA}
+                >
+                  {view_awards.map((award) => (
+                    <MenuItem key={award} value={award}>
+                      <Checkbox
+                        checked={filter.sort.indexOf(award) > -1}
+                      />
+                      <ListItemText primary={award} />
+                    </MenuItem>
+                  ))}
+                </MyTextField>
+              </MyFormControl>
+              </MyGrid>
+              <MyGrid item xs="2">
+              <MyFormControl variant="outlined">
                   <MyTextField
                     id="outlined-basic"
                     label="Тип наград"
                     variant="outlined"
-                    value={filter.type_awardstype_award}
+                    value={filter.type}
                     select="true"
                     SelectProps = {typeAwardsParams}
                     onChange={this.handleChangeTA}
@@ -252,28 +252,6 @@ export class Filter extends React.Component {
                       </MenuItem>
                     ))}
                     </MyTextField>
-                </MyFormControl>
-              </MyGrid>
-              <MyGrid item xs="2">
-              <MyFormControl variant="outlined">
-                  <MyTextField
-                    id="outlined-basic"
-                    label="Вид наград"
-                    variant="outlined"
-                    value={filter.view_awards}
-                    select="true"
-                    SelectProps = {viewAwardsParams}
-                    onChange={this.handleChangeVA}
-                  >
-                    {view_awards.map((award) => (
-                      <MenuItem key={award} value={award}>
-                        <Checkbox
-                          checked={filter.sort.indexOf(award) > -1}
-                        />
-                        <ListItemText primary={award} />
-                      </MenuItem>
-                    ))}
-                  </MyTextField>
                 </MyFormControl>
               </MyGrid>
               <Grid item xs="2">

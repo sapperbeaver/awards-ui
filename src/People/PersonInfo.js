@@ -127,14 +127,13 @@ width: 100%;
 `;
 const Wrapper = styled.div`
 background: white;
-margin-left: 95px; 
 padding: 20px;
 padding-left: 65px;
 width: 77%;
 display: flex;
 flex-direction: column;
 position: relative;
-margin-top: 100px;
+margin-top: 125px;
 `;
 const Span = styled.span`
 color: #676a6c;
@@ -189,6 +188,9 @@ const GlobalStyle = createGlobalStyle`
     body{
          background: #eeeeee; 
     }
+    #root{
+      width: 100%;
+    }
 `;
 
 
@@ -202,11 +204,11 @@ class PersonInfo extends React.Component {
       redirect: null,
     };
   }
-  handleClickDelete = () =>{
+  async handleClickDelete(){
     
     const result = window.confirm(`Вы действительно хотите удалить ${this.state.data.name}?`)
     if(result){
-      Axios.delete(`${config.host}/person-info/${this.props.match.params.id}/`);
+      await Axios.delete(`${config.host}/person-info/${this.props.match.params.id}/`);
       this.setState({redirect: '/table'});
     }
   }
@@ -243,7 +245,7 @@ class PersonInfo extends React.Component {
     <ButtonContainer>
     <ButtonBack onClick = {this.onClick}><IconContainerBack><i className="icon-arrow"/></IconContainerBack>Вернуться к списку</ButtonBack>
       {localStorage.getItem('permission') === 'true' && <ButtonEdit onClick = {this.handleClickEdit}><IconContainer><IconEdit className="icon-edit"/></IconContainer>Редактировать</ButtonEdit>}
-        {localStorage.getItem('permission') === 'true' && <ButtonDelete onClick = {this.handleClickDelete}><IconContainer><IconDelete className="icon-delete"/></IconContainer>Удалить</ButtonDelete>}
+        {localStorage.getItem('permission') === 'true' && <ButtonDelete onClick = {this.handleClickDelete.bind(this)}><IconContainer><IconDelete className="icon-delete"/></IconContainer>Удалить</ButtonDelete>}
     </ButtonContainer>
     <TitleTextAwardConteiner>
           <TitleTextConteiner>

@@ -151,6 +151,7 @@ class Login extends React.Component {
             <MyTextField
               id="outlined-basic"
               label="Пароль"
+		type="password"
               value={this.state.password}
               variant="outlined"
               className="MuiFormLabel-root"
