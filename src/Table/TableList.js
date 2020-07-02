@@ -181,7 +181,9 @@ class TableList extends React.Component {
   };
 
   render() {
-    console.log(this.state.data);
+    const href = window.location.href
+    localStorage.setItem('href', href)
+    console.log("1123123",href);
     return (
       <Wrapper>
         {this.state.redirect && <Redirect to={this.state.redirect} />}

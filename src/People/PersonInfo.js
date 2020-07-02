@@ -219,7 +219,9 @@ class PersonInfo extends React.Component {
 
   }
   onClick = () => {
-    this.setState({redirect: '/table'});
+    const href = localStorage.getItem('href')
+    console.log(href)
+    window.location.assign(href)
   }
   handleClickEdit = () => {
     this.setState({redirect: `/people/info/edit/${this.props.match.params.id}`});
